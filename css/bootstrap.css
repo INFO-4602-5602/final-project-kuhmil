@@ -98,12 +98,12 @@ hr {
      -moz-box-sizing: content-box;
           box-sizing: content-box;
 }
-pre {
+/*pre {
   overflow: auto;
-}
+}*/
 code,
 kbd,
-pre,
+/*pre,*/
 samp {
   font-family: monospace, monospace;
   font-size: 1em;
@@ -212,12 +212,12 @@ th {
   a[href^="javascript:"]:after {
     content: "";
   }
-  pre,
+  /*pre,
   blockquote {
     border: 1px solid #999;
 
     page-break-inside: avoid;
-  }
+  }*/
   thead {
     display: table-header-group;
   }
@@ -1529,7 +1529,7 @@ address {
 }
 code,
 kbd,
-pre,
+
 samp {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -1556,7 +1556,7 @@ kbd kbd {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-pre {
+/*pre {
   display: block;
   padding: 9.5px;
   margin: 0 0 10px;
@@ -1568,7 +1568,7 @@ pre {
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+}*/
 pre code {
   padding: 0;
   font-size: inherit;

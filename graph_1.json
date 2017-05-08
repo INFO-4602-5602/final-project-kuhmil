@@ -1,0 +1,49 @@
+{
+  "nodes":[
+    {"name":"Wages in different Countries","group":1},
+    {"name":"Poor","group":2},
+    {"name":"India","group":2},
+    {"name":"China","group":3},
+    {"name":"Indonesia","group":4},
+    {"name":"Costa Rica","group":4},
+    {"name":"$(0.34)","group":5},
+    {"name":"$(2.38)","group":6},
+    {"name":"$(0.13)","group":7},
+    {"name":"$(0.44)","group":8},
+    {"name":"Wealthy","group":9},
+    {"name":"United States","group":10},
+    {"name":"France","group":10},
+    {"name":"Australia","group":10},
+    {"name":"Denmark","group":10},
+    {"name":"$(7.25)","group":11},
+    {"name":"$(10.38)","group":12},
+    {"name":"$(12.46)","group":13},
+    {"name":"$(20.0)","group":14}
+
+
+
+  ],
+  "links":[
+
+    {"source":2,"target":1},
+    {"source":0,"target":1},
+    {"source":3,"target":1},
+    {"source":4,"target":1},
+    {"source":5,"target":1},
+    {"source":6,"target":4},
+    {"source":7,"target":5},
+    {"source":8,"target":2},
+    {"source":9,"target":3},
+    {"source":10,"target":0},
+    {"source":11,"target":10},
+    {"source":12,"target":10},
+    {"source":13,"target":10},
+    {"source":14,"target":10},
+    {"source":15,"target":11},
+    {"source":16,"target":12},
+    {"source":17,"target":13},
+    {"source":18,"target":14}
+
+
+  ]
+}

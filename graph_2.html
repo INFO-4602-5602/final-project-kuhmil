@@ -13,7 +13,7 @@
 <svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
 
 <script language="JavaScript">
-    var gauge1 = loadLiquidFillGauge("fillgauge1", 85);
+    var gauge1 = loadLiquidFillGauge("fillgauge1", 0);
     var config1 = liquidFillGaugeDefaultSettings();
     config1.circleColor = " #000000";
     config1.textColor = "#FF4444";
@@ -24,10 +24,8 @@
     config1.waveAnimateTime = 1000;
   
     function NewValue(){
-        if(Math.random() > .5){
-            return Math.round(Math.random()*100);
-        } else {
-            return (Math.random()*100).toFixed(1);
+        if(Math.random() > 0){
+            return 85;
         }
     }
 </script>
