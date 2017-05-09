@@ -33,7 +33,9 @@ Please upload all deliverables through GitHub Classroom. This includes any code,
 ~~~
 Use localhost:8000
 ~~~
+
 or use
+
 ~~~
 index.html
 ~~~
