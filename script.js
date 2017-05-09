@@ -26,20 +26,19 @@ var opacityCircles = 0.7,
 
 //Set the color for each region
 var color = d3.scale.ordinal()
-					.range(["#EFB605", "#E58903", "#E01A25", "#C20049", "#991C71", "#66489F", "#2074A0", "#10A66E", "#7EB852"])
-					.domain(["Africa | North & East", "Africa | South & West", "America | North & Central", "America | South", 
-							 "Asia | East & Central", "Asia | South & West", "Europe | North & West", "Europe | South & East", "Oceania"]);
+					.range(["#E58903", "#C20049", "#66489F", "#2074A0", "#10A66E"])
+					.domain(["Africa", "North America", "South America","Asia", "Europe"]);
 							 
 //Set the new x axis range
-var xScale = d3.scale.log()
+var xScale = d3.scale.linear()
 	.range([0, width])
-	.domain([100,2e5]); //I prefer this exact scale over the true range and then using "nice"
-	//.domain(d3.extent(countries, function(d) { return d.GDP_perCapita; }))
+	.domain([50,800]); //I prefer this exact scale over the true range and then using "nice"
+	//.domain(d3.extent(countries, function(d) { return d.Textile; }))
 	//.nice();
 //Set new x-axis
 var xAxis = d3.svg.axis()
 	.orient("bottom")
-	.ticks(2)
+	.ticks(10)
 	.tickFormat(function (d) {
 		return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) { 
 			var prefix = d3.formatPrefix(d); 
@@ -56,22 +55,22 @@ wrapper.append("g")
 //Set the new y axis range
 var yScale = d3.scale.linear()
 	.range([height,0])
-	.domain(d3.extent(countries, function(d) { return d.lifeExpectancy; }))
+	.domain(d3.extent(countries, function(d) { return d.Fair_trade; }))
 	.nice();	
 var yAxis = d3.svg.axis()
 	.orient("left")
-	.ticks(6)  //Set rough # of ticks
+	.ticks(10)  //Set rough # of ticks
 	.scale(yScale);	
 //Append the y-axis
 wrapper.append("g")
 		.attr("class", "y axis")
-		.attr("transform", "translate(" + 0 + "," + 0 + ")")
+		/*.attr("transform", "translate(" + 0 + "," + 0 + ")")*/
 		.call(yAxis);
 		
 //Scale for the bubble size
 var rScale = d3.scale.sqrt()
 			.range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
-			.domain(d3.extent(countries, function(d) { return d.GDP; }));
+			.domain(d3.extent(countries, function(d) { return d.Population; }));
 
 //////////////////////////////////////////////////////
 ///////////////// Initialize Labels //////////////////
@@ -84,7 +83,7 @@ wrapper.append("g")
 	.attr("text-anchor", "end")
 	.style("font-size", (mobileScreen ? 8 : 12) + "px")
 	.attr("transform", "translate(" + width + "," + (height - 10) + ")")
-	.text("GDP per capita [US $] - Note the logarithmic scale");
+	.text("Textile Revenue total");
 
 //Set up y axis label
 wrapper.append("g")
@@ -93,7 +92,7 @@ wrapper.append("g")
 	.attr("text-anchor", "end")
 	.style("font-size", (mobileScreen ? 8 : 12) + "px")
 	.attr("transform", "translate(18, 0) rotate(-90)")
-	.text("Life expectancy");
+	.text("Fair Trade Revenue");
 
 ////////////////////////////////////////////////////////////// 
 //////////////////// Set-up voronoi ////////////////////////// 
@@ -104,8 +103,8 @@ wrapper.append("g")
 //The clip extent will make the boundaries end nicely along the chart area instead of splitting up the entire SVG
 //(if you do not do this it would mean that you already see a tooltip when your mouse is still in the axis area, which is confusing)
 var voronoi = d3.geom.voronoi()
-	.x(function(d) { return xScale(d.GDP_perCapita); })
-	.y(function(d) { return yScale(d.lifeExpectancy); })
+	.x(function(d) { return xScale(d.Textile); })
+	.y(function(d) { return yScale(d.Fair_trade); })
 	.clipExtent([[0, 0], [width, height]]);
 
 var voronoiCells = voronoi(countries);
@@ -122,7 +121,7 @@ clipWrapper.selectAll(".clip")
 	.data(voronoiCells)
 	.enter().append("clipPath")
   	.attr("class", "clip")
-  	.attr("id", function(d) { return "clip-" + d.point.CountryCode; })
+
   	.append("path")
   	.attr("class", "clip-path-circle")
   	.attr("d", function(d) { return "M" + d.join(",") + "Z"; });
@@ -133,13 +132,13 @@ var circleClipGroup = wrapper.append("g")
 	
 //Place the larger circles to eventually capture the mouse
 var circlesOuter = circleClipGroup.selectAll(".circle-wrapper")
-	.data(countries.sort(function(a,b) { return b.GDP > a.GDP; }))
+	.data(countries.sort(function(a,b) { return b.Population > a.Population; }))
 	.enter().append("circle")
-	.attr("class", function(d,i) { return "circle-wrapper " + d.CountryCode; })
-	.attr("clip-path", function(d) { return "url(#clip-" + d.CountryCode + ")"; })
-    .style("clip-path", function(d) { return "url(#clip-" + d.CountryCode + ")"; })
-	.attr("cx", function(d) {return xScale(d.GDP_perCapita);})
-	.attr("cy", function(d) {return yScale(d.lifeExpectancy);})
+	.attr("class", function(d,i) { return "circle-wrapper " + d.Country; })
+	.attr("clip-path", function(d) { return "url(#clip-" + d.Country + ")"; })
+    .style("clip-path", function(d) { return "url(#clip-" + d.Country + ")"; })
+	.attr("cx", function(d) {return xScale(d.Textile);})
+	.attr("cy", function(d) {return yScale(d.Fair_trade);})
 	.attr("r", maxDistanceFromPoint)
 	.on("mouseover", showTooltip)
 	.on("mouseout",  removeTooltip);;
@@ -154,12 +153,12 @@ var circleGroup = wrapper.append("g")
 	
 //Place the country circles
 circleGroup.selectAll("countries")
-	.data(countries.sort(function(a,b) { return b.GDP > a.GDP; })) //Sort so the biggest circles are below
+	.data(countries.sort(function(a,b) { return b.Population > a.Population; })) //Sort so the biggest circles are below
 	.enter().append("circle")
-		.attr("class", function(d,i) { return "countries " + d.CountryCode; })
-		.attr("cx", function(d) {return xScale(d.GDP_perCapita);})
-		.attr("cy", function(d) {return yScale(d.lifeExpectancy);})
-		.attr("r", function(d) {return rScale(d.GDP);})
+		.attr("class", function(d,i) { return "countries " + d.Country; })
+		.attr("cx", function(d) {return xScale(d.Textile);})
+		.attr("cy", function(d) {return yScale(d.Fair_trade);})
+		.attr("r", function(d) {return rScale(d.Population);})
 		.style("opacity", opacityCircles)
 		.style("fill", function(d) {return color(d.Region);});
 			
@@ -215,8 +214,7 @@ if (!mobileScreen) {
 	//Create g element for bubble size legend
 	var bubbleSizeLegend = legendWrapper.append("g")
 							.attr("transform", "translate(" + (legendWidth/2 - 30) + "," + (color.domain().length*rowHeight + 20) +")");
-	//Draw the bubble size legend
-	bubbleLegend(bubbleSizeLegend, rScale, legendSizes = [1e11,3e12,1e13], legendName = "GDP (Billion $)");		
+		
 }//if !mobileScreen
 else {
 	d3.select("#legend").style("display","none");
@@ -325,7 +323,7 @@ function selectLegend(opacity) {
 function removeTooltip (d, i) {
 
 	//Save the chosen circle (so not the voronoi)
-	var element = d3.selectAll(".countries."+d.CountryCode);
+	var element = d3.selectAll(".countries."+d.Country);
 		
 	//Fade out the bubble again
 	element.style("opacity", opacityCircles);
@@ -347,7 +345,7 @@ function removeTooltip (d, i) {
 function showTooltip (d, i) {
 	
 	//Save the chosen circle (so not the voronoi)
-	var element = d3.selectAll(".countries."+d.CountryCode);
+	var element = d3.selectAll(".countries."+d.Country);
 	
 	//Define and show the tooltip
 	$(element).popover({
@@ -391,7 +389,7 @@ function showTooltip (d, i) {
 		.style("fill", color)
 		.style("opacity",  0)
 		.style("text-anchor", "middle")
-		.text( "$ " + d3.format(".2s")(d.GDP_perCapita) )
+		.text( "$ " + d3.format(".2s")(d.Textile) )
 		.transition().duration(200)
 		.style("opacity", 0.5);
 
@@ -417,7 +415,7 @@ function showTooltip (d, i) {
 		.style("fill", color)
 		.style("opacity",  0)
 		.style("text-anchor", "end")
-		.text( d3.format(".1f")(d.lifeExpectancy) )
+		.text( d3.format(".1f")(d.Fair_trade) )
 		.transition().duration(200)
 		.style("opacity", 0.5);	
 					

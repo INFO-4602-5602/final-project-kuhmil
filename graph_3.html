@@ -8,7 +8,7 @@
 
     function drawChart() {
     var data = google.visualization.arrayToDataTable([
-    /**  ['Country','Total','Fair','Region'],
+    /**  ['Country','Textile','Fair','Region'],
       ['Austria',142,205,'Europe'],
       ['Belgium',251,65.7,'Europe'],
       ['Canada',402.4,271.85,'North America'],
@@ -30,7 +30,7 @@
       ['Sweden',151.1,118.82,'Europe'],
       ['Switzerland',301.1,241.1,'Europe'],
       ['India',154,0.4,'Asia']**/
-      ['Country','Cotton','Use','Region'],
+      ['Country','Cotton Produced','Cotton Used','Region'],
       ['China', 6532, 30400,'Asia'],
       ['India',6423,13500,'Asia'],
       ['United States',579,6400,'North America'],
@@ -44,8 +44,8 @@
 
     
       var options = {
-        title: 'Correlation between life expectancy, fertility rate ' +
-               'and population of some world countries (2010)',
+        title: 'This graph represents the correlation between how much cotton is produced ' +
+               'and how much is used. The cotton produced is represented by thousand metric tonnes and the use of cotton is represented by bales. A bale of cotton is about 500 pounds. The top ten countries that produce and use cotton have been used to represent this data. It is interavtive so just use your cursor over whichever country you wish to hover over.'  ,
         hAxis: {title: 'Cotton Producing (metric tonnes)'},
         vAxis: {title: 'Cotton use (Bales)',
               width: 600,
@@ -71,6 +71,6 @@
   </script>
 </head>
 <body>
-  <div id="textstyle" style="width: 1000px; height: 700px;  "></div>
+  <div id="textstyle" style="width: 1300px; height: 700px;  "></div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "nodes":[
     {"name":"Wages in different Countries","group":1},
-    {"name":"Poor","group":2},
+    {"name":"Developing Countries","group":2},
     {"name":"India","group":2},
     {"name":"China","group":3},
     {"name":"Indonesia","group":4},
@@ -10,7 +10,7 @@
     {"name":"$(2.38)","group":6},
     {"name":"$(0.13)","group":7},
     {"name":"$(0.44)","group":8},
-    {"name":"Wealthy","group":9},
+    {"name":"First World Countries","group":9},
     {"name":"United States","group":10},
     {"name":"France","group":10},
     {"name":"Australia","group":10},
