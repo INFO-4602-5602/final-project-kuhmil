@@ -29,5 +29,11 @@ Final projects are due 11:59pm on 5.5; however, you will have a no-cost extensio
 
 Please upload all deliverables through GitHub Classroom. This includes any code, data, documentation, or write-up. If you have physical artifacts, please either reach out to me to set up an appointment to present your artifacts or submit an explanatory video and/or set of photographs. 
 
-#Run
+<h3>Run</h3>
+~~~
 Use localhost:8000
+~~~
+or use
+~~~
+index.html
+~~~
