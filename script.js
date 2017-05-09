@@ -1,8 +1,3 @@
-////////////////////////////////////////////////////////////
-//////////////////////// Set-up ////////////////////////////
-////////////////////////////////////////////////////////////
-
-//Quick fix for resizing some things for mobile-ish viewers
 var mobileScreen = ($( window ).innerWidth() < 500 ? true : false);
 
 //Scatterplot
@@ -17,9 +12,6 @@ var svg = d3.select("#chart").append("svg")
 var wrapper = svg.append("g").attr("class", "chordWrapper")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//////////////////////////////////////////////////////
-///////////// Initialize Axes & Scales ///////////////
-//////////////////////////////////////////////////////
 
 var opacityCircles = 0.7,
 	maxDistanceFromPoint = 50;
@@ -32,10 +24,7 @@ var color = d3.scale.ordinal()
 //Set the new x axis range
 var xScale = d3.scale.linear()
 	.range([0, width])
-	.domain([50,800]); //I prefer this exact scale over the true range and then using "nice"
-	//.domain(d3.extent(countries, function(d) { return d.Textile; }))
-	//.nice();
-//Set new x-axis
+	.domain([50,800]); 
 var xAxis = d3.svg.axis()
 	.orient("bottom")
 	.ticks(10)
@@ -72,10 +61,6 @@ var rScale = d3.scale.sqrt()
 			.range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
 			.domain(d3.extent(countries, function(d) { return d.Population; }));
 
-//////////////////////////////////////////////////////
-///////////////// Initialize Labels //////////////////
-//////////////////////////////////////////////////////
-
 //Set up X axis label
 wrapper.append("g")
 	.append("text")
@@ -83,7 +68,7 @@ wrapper.append("g")
 	.attr("text-anchor", "end")
 	.style("font-size", (mobileScreen ? 8 : 12) + "px")
 	.attr("transform", "translate(" + width + "," + (height - 10) + ")")
-	.text("Textile Revenue total");
+	.text("Textile Revenue total (Billion $)");
 
 //Set up y axis label
 wrapper.append("g")
@@ -92,16 +77,8 @@ wrapper.append("g")
 	.attr("text-anchor", "end")
 	.style("font-size", (mobileScreen ? 8 : 12) + "px")
 	.attr("transform", "translate(18, 0) rotate(-90)")
-	.text("Fair Trade Revenue");
+	.text("Fair Trade Revenue (Million $)");
 
-////////////////////////////////////////////////////////////// 
-//////////////////// Set-up voronoi ////////////////////////// 
-////////////////////////////////////////////////////////////// 
-
-//Initiate the voronoi function
-//Use the same variables of the data in the .x and .y as used in the cx and cy of the circle call
-//The clip extent will make the boundaries end nicely along the chart area instead of splitting up the entire SVG
-//(if you do not do this it would mean that you already see a tooltip when your mouse is still in the axis area, which is confusing)
 var voronoi = d3.geom.voronoi()
 	.x(function(d) { return xScale(d.Textile); })
 	.y(function(d) { return yScale(d.Fair_trade); })
@@ -109,11 +86,7 @@ var voronoi = d3.geom.voronoi()
 
 var voronoiCells = voronoi(countries);
 	
-////////////////////////////////////////////////////////////	
-///////////// Circles to capture close mouse event /////////
-////////////////////////////////////////////////////////////	
 
-//Create wrapper for the voronoi clip paths
 var clipWrapper = wrapper.append("defs")
     .attr("class", "clipWrapper");
 
@@ -143,9 +116,6 @@ var circlesOuter = circleClipGroup.selectAll(".circle-wrapper")
 	.on("mouseover", showTooltip)
 	.on("mouseout",  removeTooltip);;
 
-////////////////////////////////////////////////////////////	
-/////////////////// Scatterplot Circles ////////////////////
-////////////////////////////////////////////////////////////	
 
 //Initiate a group element for the circles	
 var circleGroup = wrapper.append("g")
@@ -162,9 +132,6 @@ circleGroup.selectAll("countries")
 		.style("opacity", opacityCircles)
 		.style("fill", function(d) {return color(d.Region);});
 			
-///////////////////////////////////////////////////////////////////////////
-///////////////////////// Create the Legend////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 
 if (!mobileScreen) {
 	//Legend			
@@ -219,10 +186,6 @@ if (!mobileScreen) {
 else {
 	d3.select("#legend").style("display","none");
 }
-
-//////////////////////////////////////////////////////
-/////////////////// Bubble Legend ////////////////////
-//////////////////////////////////////////////////////
 
 function bubbleLegend(wrapperVar, scale, sizes, titleName) {
 
@@ -297,11 +260,8 @@ function bubbleLegend(wrapperVar, scale, sizes, titleName) {
 		.attr('dy', '0.25em')
 		.text("$ " + numFormat(Math.round(legendSize3/1e9)) + " B");
 		
-}//bubbleLegend
+}
 
-///////////////////////////////////////////////////////////////////////////
-//////////////////// Hover function for the legend ////////////////////////
-///////////////////////////////////////////////////////////////////////////
 	
 //Decrease opacity of non selected circles when hovering in the legend	
 function selectLegend(opacity) {
@@ -315,9 +275,6 @@ function selectLegend(opacity) {
 	  };
 }//function selectLegend
 
-///////////////////////////////////////////////////////////////////////////
-/////////////////// Hover functions of the circles ////////////////////////
-///////////////////////////////////////////////////////////////////////////
 
 //Hide the tooltip when the mouse moves away
 function removeTooltip (d, i) {

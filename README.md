@@ -1,5 +1,5 @@
 # Final Project
-HOla. For your final project, use the skills you've developed in this class to tackle a new problem. For example, you could develop a visualization for a complex dataset, construct a physicalization, visualize an algorithmic process, or run an experiment to explore graphical perception. Be creative and have fun! 
+For your final project, use the skills you've developed in this class to tackle a new problem. For example, you could develop a visualization for a complex dataset, construct a physicalization, visualize an algorithmic process, or run an experiment to explore graphical perception. Be creative and have fun! 
 
 <h2>Requirements:</h2>
 <h3>Proposal:</h3>
@@ -28,3 +28,6 @@ Final projects are due 11:59pm on 5.5; however, you will have a no-cost extensio
 
 
 Please upload all deliverables through GitHub Classroom. This includes any code, data, documentation, or write-up. If you have physical artifacts, please either reach out to me to set up an appointment to present your artifacts or submit an explanatory video and/or set of photographs. 
+
+#Run
+Use localhost:8000
